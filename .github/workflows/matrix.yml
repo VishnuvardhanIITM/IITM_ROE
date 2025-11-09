@@ -1,4 +1,4 @@
-name: Matrix Build (e9e52c0)
+name: Matrix Build (5e35051)
 
 on:
   push:
@@ -10,20 +10,25 @@ jobs:
 
     strategy:
       matrix:
-        version: [14, 16, 18]  # 3 parallel jobs
+        version: [14, 16, 18]  # 3 parallel jobs for Node.js versions
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: matrix-e9e52c0
-        run: echo "Building Version ${{ matrix.version }}"
+      - name: matrix-5e35051
+        run: echo "Building for Node version ${{ matrix.version }}"
 
-      - name: Generate file
-        run: echo "This is build for version ${{ matrix.version }}" > output.txt
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.version }}
+
+      - name: Generate build artifact
+        run: echo "Build output for Node.js version ${{ matrix.version }}" > output.txt
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: build-e9e52c0-v${{ matrix.version }}
-          path: output.txt
+          name: build-5e35051-v${{ matrix.version }}
+          path: output.txt
