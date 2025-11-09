@@ -1,0 +1,29 @@
+name: Matrix Build (e9e52c0)
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        version: [14, 16, 18]  # 3 parallel jobs
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: matrix-e9e52c0
+        run: echo "Building Version ${{ matrix.version }}"
+
+      - name: Generate file
+        run: echo "This is build for version ${{ matrix.version }}" > output.txt
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: build-e9e52c0-v${{ matrix.version }}
+          path: output.txt
